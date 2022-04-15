@@ -50,7 +50,7 @@
                                     <constraint firstAttribute="width" constant="126" id="9MQ-o7-HdI"/>
                                     <constraint firstAttribute="height" constant="30" id="nO1-cX-KpU"/>
                                 </constraints>
-                                <state key="normal" title="Hit me"/>
+                                <state key="normal" title="Hit"/>
                                 <connections>
                                     <action selector="hitButtonPressed:" destination="rEm-7b-P7a" eventType="touchUpInside" id="XxA-AN-Fo3"/>
                                 </connections>

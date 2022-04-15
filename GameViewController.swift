@@ -7,6 +7,7 @@
 
 import UIKit
 
+//Card class
 class Card {
     var name = ""
     var value = 0
@@ -80,6 +81,8 @@ class GameViewController: UIViewController {
         showHouseCards()
         updatePlayerTotal()
         updateHouseTotal()
+        checkPlayerScore()
+        checkHouseScore()
     }
     
     //Draws a card for the player, updating the image and checking the score
@@ -92,10 +95,7 @@ class GameViewController: UIViewController {
         updatePlayerTotal()
         checkPlayerScore()
         cardIndex += 1;
-        if playerBust {
-            playerScore -= 50;
-            showWinner()
-        }
+
     }
     
     //Draws cards for the house, update the image and checking the score
@@ -110,16 +110,6 @@ class GameViewController: UIViewController {
         cardIndex += 1;
         if houseTotal < playerTotal {
             stayAction()
-        }
-        
-        if houseTotal >= playerTotal && !houseBust {
-            playerScore -= 50;
-            showWinner()
-        }
-        
-        if houseBust {
-            playerScore += 50;
-            showWinner()
         }
     }
     
@@ -149,11 +139,38 @@ class GameViewController: UIViewController {
         houseTotalLabel.text = "House Total: \(houseTotal)"
     }
     
+    //Reset game
+    func resetGame() {
+        playerTotal = 0;
+        houseTotal = 0;
+        playerBust = false;
+        houseBust = false;
+        houseImg1.image = UIImage(named: "joker");
+        houseImg2.image = UIImage(named: "joker");
+        houseImg3.image = UIImage(named: "joker");
+        playerImg1.image = UIImage(named: "joker");
+        playerImg2.image = UIImage(named: "joker");
+        playerImg3.image = UIImage(named: "joker");
+        playerImg3.isHidden = true;
+        houseImg3.isHidden = true;
+        hitButton.isHidden = true;
+        stayButton.isHidden = true;
+        startButton.isHidden = false;
+        playerCards = []
+        houseCards = []
+        updatePlayerTotal()
+        updateHouseTotal()
+        cardIndex = 0;
+    }
+    
     //Show alert for winner
     func showWinner() {
-        let msg = self.houseBust ? "Player wins!" : "House wins!";
+        let msg = self.houseBust ? "Player wins! Your score: \(playerScore)" : "House wins! Your score: \(playerScore)";
         let controller = UIAlertController(title: "Game Over", message: msg, preferredStyle: .alert);
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: {
+            action in
+            self.resetGame()
+        })
         
         controller.addAction(dismissAction);
         present(controller, animated: true, completion: nil);
@@ -161,15 +178,28 @@ class GameViewController: UIViewController {
     
     //Check player's score for bust
     func checkPlayerScore() {
-        if playerTotal >= 21 {
+        if playerTotal > 21 {
             playerBust = true;
+        }
+        if playerBust {
+            playerScore -= 50;
+            showWinner()
         }
     }
     
     //Check house's score for bust
     func checkHouseScore() {
-        if houseTotal >= 21 {
+        if houseTotal > 21 {
             houseBust = true;
+        }
+        if houseTotal >= playerTotal && !houseBust && cardIndex > 4{
+            playerScore -= 50;
+            showWinner()
+        }
+        
+        if houseBust {
+            playerScore += 50;
+            showWinner()
         }
     }
     
@@ -223,37 +253,4 @@ class GameViewController: UIViewController {
             }
         }
     }
-    
-//    func clubsSetup() {
-//        for i in 1...13 {
-//            if i < 10 {
-//                let card = String(i) + "_of_clubs"
-//                createdDeck.append(card)
-//            } else {
-//                switch i {
-//                case 10:
-//                    let card = "jack_of_clubs"
-//                    createdDeck.append(card)
-//                    break;
-//                case 11:
-//                    let card = "queen_of_clubs"
-//                    createdDeck.append(card)
-//                    break;
-//                case 12:
-//                    let card = "king_of_clubs"
-//                    createdDeck.append(card)
-//                    break;
-//                case 13:
-//                    let card = "ace_of_clubs"
-//                    createdDeck.append(card)
-//                    break;
-//                default:
-//                    let card = "Card error"
-//                    print(card)
-//                    break;
-//                }
-//
-//            }
-//        }
-//    }
 }
