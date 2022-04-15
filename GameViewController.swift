@@ -7,19 +7,40 @@
 
 import UIKit
 
+class Card {
+    var name = ""
+    var value = 0
+}
+
 class GameViewController: UIViewController {
 
+    //Card images
     @IBOutlet weak var houseImg1: UIImageView!
     @IBOutlet weak var houseImg2: UIImageView!
+    @IBOutlet weak var houseImg3: UIImageView!
     @IBOutlet weak var playerImg1: UIImageView!
     @IBOutlet weak var playerImg2: UIImageView!
+    @IBOutlet weak var playerImg3: UIImageView!
     
+    //Score labels
+    @IBOutlet weak var houseTotalLabel: UILabel!
+    @IBOutlet weak var playerTotalLabel: UILabel!
+    
+    //Buttons
     @IBOutlet weak var hitButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
-    var createdDeck: [String] = []
+    @IBOutlet weak var stayButton: UIButton!
+    
+    //Deck & Cards
+    var createdDeck: [Card] = []
     var suits: [String] = ["clubs", "diamonds", "hearts", "spades"]
-    var houseCards: [String] = []
-    var playerCards: [String] = []
+    var houseCards: [Card] = []
+    var playerCards: [Card] = []
+    var cardIndex = 0;
+    
+    //Scores
+    var playerTotal = 0;
+    var houseTotal = 0;
     
 
     override func viewDidLoad() {
@@ -27,59 +48,128 @@ class GameViewController: UIViewController {
         deckSetup()
         // Do any additional setup after loading the view.
     }
+    
+    //Player hits
+    @IBAction func hitButtonPressed(_ sender: UIButton) {
+        playerImg3.image = UIImage(named: "\(createdDeck[cardIndex].name)");
+        if playerImg3.isHidden {
+            playerImg3.isHidden = false;
+        }
+        playerTotal += createdDeck[cardIndex].value
+        updatePlayerTotal()
+        cardIndex += 1;
+    }
+    
+    //Player stays
+    @IBAction func stayButtonPressed(_ sender: UIButton) {
+        houseImg3.image = UIImage(named: "\(createdDeck[cardIndex].name)");
+        if houseImg3.isHidden {
+            houseImg3.isHidden = false;
+        }
+        houseTotal += createdDeck[cardIndex].value
+        updateHouseTotal()
+        cardIndex += 1;
+    }
+    
+    //When the game is started
     @IBAction func startButtonPressed(_ sender: UIButton) {
         hitButton.isHidden = false;
         startButton.isHidden = true;
+        stayButton.isHidden = false;
         shuffleDeck()
-        houseCards.append(createdDeck[0])
-        houseCards.append(createdDeck[1])
-        playerCards.append(createdDeck[2])
-        playerCards.append(createdDeck[3])
-        printHouseCards()
-        printPlayerCards()
-    }
-    @IBAction func buttonPressed(_ sender: UIButton) {
+        houseCards.append(createdDeck[cardIndex])
+        cardIndex += 1;
+        houseCards.append(createdDeck[cardIndex])
+        cardIndex += 1;
+        playerCards.append(createdDeck[cardIndex])
+        cardIndex += 1;
+        playerCards.append(createdDeck[cardIndex])
+        cardIndex += 1;
+        showPlayerCards()
+        showHouseCards()
+        updatePlayerTotal()
+        updateHouseTotal()
     }
     
+    //Update the image on the player's cards to reflect their hand
+    func showPlayerCards() {
+        playerImg1.image = UIImage(named: "\(playerCards[0].name)");
+        playerImg2.image = UIImage(named: "\(playerCards[1].name)");
+        playerTotal += playerCards[0].value;
+        playerTotal += playerCards[1].value;
+    }
+    
+    //Update the image on the house's cards to reflect their hand
+    func showHouseCards() {
+        houseImg1.image = UIImage(named: "\(houseCards[0].name)");
+        houseImg2.image = UIImage(named: "\(houseCards[1].name)");
+        houseTotal += houseCards[0].value;
+        houseTotal += houseCards[1].value;
+    }
+    
+    //Update the player's current score
+    func updatePlayerTotal() {
+        playerTotalLabel.text = "Player Total: \(playerTotal)"
+    }
+    
+    //Update the house's current score
+    func updateHouseTotal() {
+        houseTotalLabel.text = "House Total: \(houseTotal)"
+    }
+    
+    //Print house's cards to console
     func printHouseCards() {
         print("House cards: \(houseCards)")
     }
     
+    //Print player's cards to console
     func printPlayerCards() {
         print("Player cards: \(playerCards)")
     }
     
+    //Shuffle the array of cards
     func shuffleDeck() {
         createdDeck.shuffle();
-        print(createdDeck)
     }
     
+    //Create the deck and cards
     func deckSetup () {
         for cardType in suits {
             for i in 2...14 {
                 if i < 11 {
-                    let card = String(i) + "_of_" + cardType
+                    let card = Card()
+                    card.name = String(i) + "_of_" + cardType
+                    card.value = i
                     createdDeck.append(card)
                 } else {
                     switch i {
                         case 11:
-                            let card = "jack_of_" + cardType
+                            let card = Card()
+                            card.name = "jack_of_" + cardType
+                            card.value = 11
                             createdDeck.append(card)
                             break;
                         case 12:
-                            let card = "queen_of_" + cardType
+                            let card = Card()
+                            card.name = "queen_of_" + cardType
+                            card.value = 12
                             createdDeck.append(card)
                             break;
                         case 13:
-                            let card = "king_of_" + cardType
+                            let card = Card()
+                            card.name = "king_of_" + cardType
+                            card.value = 13
                             createdDeck.append(card)
                             break;
                         case 14:
-                            let card = "ace_of_" + cardType
+                            let card = Card()
+                            card.name = "ace_of_" + cardType
+                            card.value = 1
                             createdDeck.append(card)
                             break;
                         default:
-                            let card = "Card error"
+                            let card = Card()
+                            card.name = "Card error"
                             print(card)
                             break;
                         }
@@ -120,16 +210,4 @@ class GameViewController: UIViewController {
 //            }
 //        }
 //    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
