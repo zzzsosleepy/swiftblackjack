@@ -41,6 +41,9 @@ class GameViewController: UIViewController {
     //Scores
     var playerTotal = 0;
     var houseTotal = 0;
+    var playerBust = false;
+    var houseBust =  false;
+    var playerScore = 0;
     
 
     override func viewDidLoad() {
@@ -51,24 +54,12 @@ class GameViewController: UIViewController {
     
     //Player hits
     @IBAction func hitButtonPressed(_ sender: UIButton) {
-        playerImg3.image = UIImage(named: "\(createdDeck[cardIndex].name)");
-        if playerImg3.isHidden {
-            playerImg3.isHidden = false;
-        }
-        playerTotal += createdDeck[cardIndex].value
-        updatePlayerTotal()
-        cardIndex += 1;
+        hitAction()
     }
     
     //Player stays
     @IBAction func stayButtonPressed(_ sender: UIButton) {
-        houseImg3.image = UIImage(named: "\(createdDeck[cardIndex].name)");
-        if houseImg3.isHidden {
-            houseImg3.isHidden = false;
-        }
-        houseTotal += createdDeck[cardIndex].value
-        updateHouseTotal()
-        cardIndex += 1;
+       stayAction()
     }
     
     //When the game is started
@@ -89,6 +80,47 @@ class GameViewController: UIViewController {
         showHouseCards()
         updatePlayerTotal()
         updateHouseTotal()
+    }
+    
+    //Draws a card for the player, updating the image and checking the score
+    func hitAction() {
+        playerImg3.image = UIImage(named: "\(createdDeck[cardIndex].name)");
+        if playerImg3.isHidden {
+            playerImg3.isHidden = false;
+        }
+        playerTotal += createdDeck[cardIndex].value
+        updatePlayerTotal()
+        checkPlayerScore()
+        cardIndex += 1;
+        if playerBust {
+            playerScore -= 50;
+            showWinner()
+        }
+    }
+    
+    //Draws cards for the house, update the image and checking the score
+    func stayAction() {
+        houseImg3.image = UIImage(named: "\(createdDeck[cardIndex].name)");
+        if houseImg3.isHidden {
+            houseImg3.isHidden = false;
+        }
+        houseTotal += createdDeck[cardIndex].value
+        updateHouseTotal()
+        checkHouseScore()
+        cardIndex += 1;
+        if houseTotal < playerTotal {
+            stayAction()
+        }
+        
+        if houseTotal >= playerTotal && !houseBust {
+            playerScore -= 50;
+            showWinner()
+        }
+        
+        if houseBust {
+            playerScore += 50;
+            showWinner()
+        }
     }
     
     //Update the image on the player's cards to reflect their hand
@@ -117,14 +149,28 @@ class GameViewController: UIViewController {
         houseTotalLabel.text = "House Total: \(houseTotal)"
     }
     
-    //Print house's cards to console
-    func printHouseCards() {
-        print("House cards: \(houseCards)")
+    //Show alert for winner
+    func showWinner() {
+        let msg = self.houseBust ? "Player wins!" : "House wins!";
+        let controller = UIAlertController(title: "Game Over", message: msg, preferredStyle: .alert);
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+        
+        controller.addAction(dismissAction);
+        present(controller, animated: true, completion: nil);
     }
     
-    //Print player's cards to console
-    func printPlayerCards() {
-        print("Player cards: \(playerCards)")
+    //Check player's score for bust
+    func checkPlayerScore() {
+        if playerTotal >= 21 {
+            playerBust = true;
+        }
+    }
+    
+    //Check house's score for bust
+    func checkHouseScore() {
+        if houseTotal >= 21 {
+            houseBust = true;
+        }
     }
     
     //Shuffle the array of cards

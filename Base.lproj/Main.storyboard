@@ -44,6 +44,17 @@
                                     <constraint firstAttribute="width" constant="141" id="paQ-mA-Tyk"/>
                                 </constraints>
                             </imageView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iaQ-eB-Skh">
+                                <rect key="frame" x="27" y="462" width="126" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="126" id="9MQ-o7-HdI"/>
+                                    <constraint firstAttribute="height" constant="30" id="nO1-cX-KpU"/>
+                                </constraints>
+                                <state key="normal" title="Hit me"/>
+                                <connections>
+                                    <action selector="hitButtonPressed:" destination="rEm-7b-P7a" eventType="touchUpInside" id="XxA-AN-Fo3"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCR-jh-bvi">
                                 <rect key="frame" x="132" y="413.5" width="150" height="30"/>
                                 <constraints>
@@ -86,13 +97,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="joker.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vnx-y9-MzG">
-                                <rect key="frame" x="141" y="462" width="141" height="203"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="141" id="iyI-Zn-3z8"/>
-                                    <constraint firstAttribute="height" constant="203" id="k43-4x-zfG"/>
-                                </constraints>
-                            </imageView>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="joker.png" translatesAutoresizingMaskIntoConstraints="NO" id="Jb8-0l-IgC">
                                 <rect key="frame" x="137" y="150" width="141" height="203"/>
                                 <constraints>
@@ -100,17 +104,13 @@
                                     <constraint firstAttribute="width" constant="141" id="reK-Tw-zQ8"/>
                                 </constraints>
                             </imageView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iaQ-eB-Skh">
-                                <rect key="frame" x="27" y="462" width="126" height="30"/>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="joker.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vnx-y9-MzG">
+                                <rect key="frame" x="136.5" y="462" width="141" height="203"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="126" id="9MQ-o7-HdI"/>
-                                    <constraint firstAttribute="height" constant="30" id="nO1-cX-KpU"/>
+                                    <constraint firstAttribute="width" constant="141" id="iyI-Zn-3z8"/>
+                                    <constraint firstAttribute="height" constant="203" id="k43-4x-zfG"/>
                                 </constraints>
-                                <state key="normal" title="Hit me"/>
-                                <connections>
-                                    <action selector="hitButtonPressed:" destination="rEm-7b-P7a" eventType="touchUpInside" id="XxA-AN-Fo3"/>
-                                </connections>
-                            </button>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="764-Yz-sns"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -122,7 +122,6 @@
                             <constraint firstItem="Jb8-0l-IgC" firstAttribute="top" secondItem="Q0y-LE-n00" secondAttribute="bottom" constant="85" id="FF1-Ct-dYv"/>
                             <constraint firstItem="764-Yz-sns" firstAttribute="trailing" secondItem="Jb8-0l-IgC" secondAttribute="trailing" constant="136" id="Fnj-5R-isD"/>
                             <constraint firstItem="rlS-7Z-FV9" firstAttribute="top" secondItem="JB0-V4-Iwa" secondAttribute="bottom" constant="40" id="Kmh-5X-MP9"/>
-                            <constraint firstItem="764-Yz-sns" firstAttribute="trailing" secondItem="Vnx-y9-MzG" secondAttribute="trailing" constant="132" id="VZn-KW-i6U"/>
                             <constraint firstItem="nH4-p3-JD7" firstAttribute="top" secondItem="iaQ-eB-Skh" secondAttribute="bottom" constant="40" id="Vk6-PT-bll"/>
                             <constraint firstItem="oCR-jh-bvi" firstAttribute="centerY" secondItem="764-Yz-sns" secondAttribute="centerY" id="djR-yP-fAr"/>
                             <constraint firstItem="nH4-p3-JD7" firstAttribute="leading" secondItem="764-Yz-sns" secondAttribute="leading" constant="20" id="dkN-JO-Px2"/>
@@ -131,13 +130,13 @@
                             <constraint firstItem="764-Yz-sns" firstAttribute="trailing" secondItem="JB0-V4-Iwa" secondAttribute="trailing" constant="28" id="gxY-Oq-EiH"/>
                             <constraint firstItem="oCR-jh-bvi" firstAttribute="centerX" secondItem="764-Yz-sns" secondAttribute="centerX" id="h2A-NK-UGe"/>
                             <constraint firstItem="Jb8-0l-IgC" firstAttribute="leading" secondItem="764-Yz-sns" secondAttribute="leading" constant="137" id="iHx-Do-E1R"/>
+                            <constraint firstItem="Vnx-y9-MzG" firstAttribute="centerX" secondItem="764-Yz-sns" secondAttribute="centerX" id="j87-ps-9VL"/>
                             <constraint firstItem="764-Yz-sns" firstAttribute="trailing" secondItem="Oln-Dj-Jer" secondAttribute="trailing" constant="20" id="lhP-Wq-Uz4"/>
                             <constraint firstItem="Vnx-y9-MzG" firstAttribute="top" secondItem="oCR-jh-bvi" secondAttribute="bottom" constant="18.5" id="nem-Jd-Vei"/>
                             <constraint firstItem="764-Yz-sns" firstAttribute="bottom" secondItem="rlS-7Z-FV9" secondAttribute="bottom" constant="78" id="qPV-d5-igW"/>
                             <constraint firstItem="764-Yz-sns" firstAttribute="bottom" secondItem="nH4-p3-JD7" secondAttribute="bottom" constant="78" id="rhH-Kw-PQF"/>
                             <constraint firstItem="764-Yz-sns" firstAttribute="bottom" secondItem="IQc-tm-HK6" secondAttribute="bottom" constant="35" id="s6z-Ec-WgQ"/>
                             <constraint firstItem="IQc-tm-HK6" firstAttribute="centerX" secondItem="764-Yz-sns" secondAttribute="centerX" id="tjX-yt-5E3"/>
-                            <constraint firstItem="Vnx-y9-MzG" firstAttribute="leading" secondItem="764-Yz-sns" secondAttribute="leading" constant="141" id="u2g-DF-xVL"/>
                             <constraint firstItem="Q0y-LE-n00" firstAttribute="top" secondItem="764-Yz-sns" secondAttribute="top" id="ui3-jx-jVO"/>
                         </constraints>
                     </view>
